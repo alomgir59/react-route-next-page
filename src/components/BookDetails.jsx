@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner";
 
 const BookDetails = () => {
+  const navigation = useNavigation();
+  console.log(navigation.state);
+  if (navigation.state === "loading") {
+    return <LoadingSpinner />;
+  }
+
   const bookData = useLoaderData();
   const [fold, setFold] = useState(true);
   console.log(bookData);
   const { image, title, desc, authors, publisher, year, rating, url, price } =
     bookData;
+
   return (
     <div className="my-container">
       // {/* Container Box */}
@@ -37,9 +45,9 @@ const BookDetails = () => {
 
           {fold ? (
             <>
-              <p className=" text-gray-500">{desc.substring(0, 100)}...</p>
+              <p className="my-5 text-gray-900">{desc.substring(0, 100)}...</p>
               <span
-                className="cursor-pointer text-blue-500 mb-5"
+                className="cursor-pointer text-blue-600 "
                 onClick={() => setFold(!fold)}
               >
                 Read More
@@ -47,9 +55,9 @@ const BookDetails = () => {
             </>
           ) : (
             <>
-              <p className=" text-gray-500">{desc}</p>
+              <p className=" my-5 text-gray-500">{desc}</p>
               <span
-                className="cursor-pointer text-blue-500 mb-5"
+                className="cursor-pointer text-blue-600"
                 onClick={() => setFold(!fold)}
               >
                 Read Less
